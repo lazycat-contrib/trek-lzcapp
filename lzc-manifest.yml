@@ -5,7 +5,7 @@ application:
     - /
   upstreams:
     - location: /
-      backend: http://app:3000/
+      backend: http://trek-app:3000/
   injects:
     - id: lazycat-file-chooser
       on: browser
@@ -14,7 +14,7 @@ application:
       do:
         - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
 services:
-  app:
+  trek-app:
     # mauriceboe/trek:3.4.1
     # upstream: mauriceboe/trek:3.4.1
     image: registry.lazycat.cloud/czyt/mauriceboe/trek:d523401774aebc4f
