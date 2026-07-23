@@ -1,0 +1,57 @@
+application:
+  subdomain: trek
+  oidc_redirect_path: /api/auth/oidc/callback
+  public_path:
+    - /
+  upstreams:
+    - location: /
+      backend: http://app:3000/
+  injects:
+    - id: lazycat-file-chooser
+      on: browser
+      when:
+        - /*
+      do:
+        - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
+
+services:
+  app:
+    # mauriceboe/trek:3.4.1
+    image: mauriceboe/trek:3.4.1
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ENCRYPTION_KEY={{ stable_secret "trek_encryption_key" }}
+      - TZ=Asia/Shanghai
+      - LOG_LEVEL=info
+      - DEFAULT_LANGUAGE=zh
+      - ALLOWED_ORIGINS=https://{{.S.AppDomain}}
+      - APP_URL=https://{{.S.AppDomain}}
+      - FORCE_HTTPS=true
+      - TRUST_PROXY=1
+      - OIDC_ISSUER=${LAZYCAT_AUTH_OIDC_ISSUER_URI}
+      - OIDC_CLIENT_ID=${LAZYCAT_AUTH_OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${LAZYCAT_AUTH_OIDC_CLIENT_SECRET}
+      - OIDC_DISPLAY_NAME=懒猫账号
+      - OIDC_ONLY=true
+    binds:
+      - /lzcapp/var/data:/app/data
+      - /lzcapp/var/uploads:/app/uploads
+    tmpfs:
+      - /tmp:noexec,nosuid,size=128m
+    cpus: 2.0
+    mem_limit: 1g
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - -qO-
+        - http://localhost:3000/api/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+usage: |
+  使用懒猫账号通过 OIDC 登录。首次登录的用户会成为 TREK 管理员；后续用户由管理员在 TREK 中控制注册或邀请策略。
+  文件上传和下载已接入懒猫文件选择器，可在本地设备与懒猫网盘之间选择。

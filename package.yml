@@ -1,0 +1,20 @@
+package: community.lazycat.app.trek
+version: 3.4.1
+name: TREK
+description: "A self-hosted travel planner with collaboration, maps, budgets, packing lists, files, and OIDC single sign-on."
+author: liketrek
+license: AGPL-3.0
+homepage: https://github.com/liketrek/TREK
+min_os_version: 1.5.0
+
+permissions:
+  required:
+    - net.internet
+
+locales:
+  zh:
+    name: TREK
+    description: "支持实时协作、交互式地图、预算、行李清单、文件管理和 OIDC 单点登录的自托管旅行规划工具。"
+  en:
+    name: TREK
+    description: "A self-hosted travel planner with collaboration, maps, budgets, packing lists, files, and OIDC single sign-on."

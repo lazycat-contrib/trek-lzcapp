@@ -1,0 +1,52 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: trek
+
+build:
+  toolchains: []
+  run_buildscript: false
+
+images:
+  - id: trek
+    target: service
+    service: app
+    source: mauriceboe/trek
+    channel: stable
+    delivery:
+      mode: lazycat
+
+stores:
+  official:
+    enabled: true
+    skip_if_version_exists: true
+    create_if_missing: true
+    changelog_locales:
+      - zh
+      - en
+    retry:
+      enabled: false
+      max_attempts: 3
+      initial_delay: 2s
+      max_delay: 30s
+    application:
+      language: zh
+      name: TREK
+      source: https://github.com/liketrek/TREK
+      source_author: liketrek
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: TREK
+    summary: "Published from lazycat-contrib/trek-lzcapp"
