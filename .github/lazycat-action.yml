@@ -21,7 +21,7 @@ build:
 images:
   - id: trek
     target: service
-    service: app
+    service: trek-app
     source: mauriceboe/trek
     channel: stable
     delivery:
