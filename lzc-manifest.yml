@@ -13,11 +13,11 @@ application:
         - /*
       do:
         - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
-
 services:
   app:
     # mauriceboe/trek:3.4.1
-    image: mauriceboe/trek:3.4.1
+    # upstream: mauriceboe/trek:3.4.1
+    image: registry.lazycat.cloud/czyt/mauriceboe/trek:d523401774aebc4f
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -51,7 +51,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 15s
-
 usage: |
   使用懒猫账号通过 OIDC 登录。首次登录的用户会成为 TREK 管理员；后续用户由管理员在 TREK 中控制注册或邀请策略。
   文件上传和下载已接入懒猫文件选择器，可在本地设备与懒猫网盘之间选择。
