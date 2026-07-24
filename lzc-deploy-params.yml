@@ -1,0 +1,43 @@
+params:
+  - id: tz
+    type: string
+    name: "Timezone"
+    description: "Timezone for logs, reminders and scheduled tasks (e.g. Asia/Shanghai, Europe/Berlin, America/New_York). Default: Asia/Shanghai"
+    default_value: "Asia/Shanghai"
+    optional: true
+
+  - id: admin_email
+    type: string
+    name: "Admin Email"
+    description: "Initial admin email — only used on first boot when no users exist. With OIDC-only mode, the first OIDC user matching admin claims becomes admin instead."
+    default_value: "admin@trek.local"
+    optional: true
+
+  - id: admin_password
+    type: secret
+    name: "Admin Password"
+    description: "Initial admin password — only used on first boot when no users exist. Not used in OIDC-only mode."
+    default_value: "$random(len=16)"
+    optional: true
+
+  - id: oidc_only
+    type: bool
+    name: "OIDC Only Mode"
+    description: "Force SSO-only login: disables password login and registration. Turn off to allow admin email/password login alongside OIDC."
+    default_value: true
+    optional: true
+
+locales:
+  zh:
+    tz:
+      name: "时区"
+      description: "日志、提醒和定时任务的时区（例如 Asia/Shanghai, Europe/Berlin, America/New_York）。默认：Asia/Shanghai"
+    admin_email:
+      name: "管理员邮箱"
+      description: "初始管理员邮箱 — 仅在首次启动且无用户时使用。OIDC-only 模式下，首个匹配管理员声明的 OIDC 用户将成为管理员。"
+    admin_password:
+      name: "管理员密码"
+      description: "初始管理员密码 — 仅在首次启动且无用户时使用。OIDC-only 模式下不使用。"
+    oidc_only:
+      name: "仅 OIDC 登录"
+      description: "强制 SSO 登录模式：禁用密码登录和注册。关闭后可同时使用管理员邮箱/密码和 OIDC 登录。"

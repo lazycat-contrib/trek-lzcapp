@@ -13,6 +13,14 @@ application:
         - /*
       do:
         - src: file:///lzcapp/pkg/content/lazycat-injects/lzc-file-chooser-inject.js
+    - id: login-autofill
+      when:
+        - /login
+      do:
+        - src: builtin://simple-inject-password
+          params:
+            user: "{{ .U.admin_email }}"
+            password: "{{ .U.admin_password }}"
 services:
   trek-app:
     # mauriceboe/trek:3.4.1
@@ -22,7 +30,7 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - ENCRYPTION_KEY={{ stable_secret "trek_encryption_key" }}
-      - TZ=Asia/Shanghai
+      - TZ={{.U.tz}}
       - LOG_LEVEL=info
       - DEFAULT_LANGUAGE=zh
       - ALLOWED_ORIGINS=https://{{.S.AppDomain}}
@@ -36,7 +44,9 @@ services:
       - OIDC_ADMIN_VALUE=app-trek-admins # Value of the OIDC claim that grants admin role
       - OIDC_SCOPE=openid email profile groups # Fully overrides the default. Add extra scopes as needed (e.g. add groups if using OIDC_ADMIN_CLAIM)
       - OIDC_DISPLAY_NAME=懒猫账号
-      - OIDC_ONLY=true
+      - OIDC_ONLY={{.U.oidc_only}}
+      - ADMIN_EMAIL={{.U.admin_email}}
+      - ADMIN_PASSWORD={{.U.admin_password}}
     binds:
       - /lzcapp/var/data:/app/data
       - /lzcapp/var/uploads:/app/uploads
@@ -55,5 +65,11 @@ services:
       retries: 3
       start_period: 15s
 usage: |
-  使用懒猫账号通过 OIDC 登录。首次登录的用户会成为 TREK 管理员；后续用户由管理员在 TREK 中控制注册或邀请策略。
-  文件上传和下载已接入懒猫文件选择器，可在本地设备与懒猫网盘之间选择。
+  ## 首次部署
+  安装时通过设置向导配置时区和管理员账号。默认启用 OIDC-only 模式（仅懒猫账号登录），首个匹配管理员声明的 OIDC 用户自动成为 TREK 管理员。
+
+  ## 密码登录
+  如需启用邮箱/密码登录，在设置向导中将「仅 OIDC 登录」关闭，管理员邮箱/密码会自动填充到登录页。
+
+  ## 用户管理
+  后续用户由管理员在 TREK 后台控制注册或邀请策略。文件上传下载已接入懒猫文件选择器。
