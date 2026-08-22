@@ -25,26 +25,11 @@ images:
     source: mauriceboe/trek
     channel: stable
     delivery:
-      mode: lazycat
+      mode: mirror
 
 stores:
   official:
-    enabled: true
-    skip_if_version_exists: true
-    create_if_missing: true
-    changelog_locales:
-      - zh
-      - en
-    retry:
-      enabled: false
-      max_attempts: 3
-      initial_delay: 2s
-      max_delay: 30s
-    application:
-      language: zh
-      name: TREK
-      source: https://github.com/liketrek/TREK
-      source_author: liketrek
+    enabled: false
   private:
     enabled: true
     skip_if_version_exists: true
