@@ -25,7 +25,7 @@ services:
   trek-app:
     # mauriceboe/trek:3.4.1
     # upstream: mauriceboe/trek:3.4.1
-    image: registry.lazycat.cloud/czyt/mauriceboe/trek:d523401774aebc4f
+    image: docker.1ms.run/mauriceboe/trek:3.4.1
     environment:
       - NODE_ENV=production
       - PORT=3000
