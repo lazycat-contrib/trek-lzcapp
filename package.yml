@@ -1,5 +1,5 @@
 package: community.lazycat.app.trek
-version: 4.1.1
+version: 4.2.0
 name: TREK
 description: "A self-hosted travel planner with collaboration, maps, budgets, packing lists, files, and OIDC single sign-on."
 author: liketrek
