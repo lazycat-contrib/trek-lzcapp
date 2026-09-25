@@ -24,8 +24,8 @@ application:
 services:
   trek-app:
     # mauriceboe/trek:3.4.1
-    # upstream: mauriceboe/trek:4.3.1
-    image: docker.1ms.run/mauriceboe/trek:4.3.1
+    # upstream: mauriceboe/trek:4.3.2
+    image: docker.1ms.run/mauriceboe/trek:4.3.2
     environment:
       - NODE_ENV=production
       - PORT=3000
